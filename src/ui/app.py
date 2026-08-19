@@ -2,7 +2,10 @@ import customtkinter as ctk
 
 from database.schema import initialize_database
 from ui.books_view import BooksView
+from ui.issue_view import IssueView
 from ui.members_view import MembersView
+from ui.return_view import ReturnView
+from ui.settings_view import SettingsView
 
 
 class LibraryApp(ctk.CTk):
@@ -11,8 +14,8 @@ class LibraryApp(ctk.CTk):
 
         super().__init__()
         self.title("Library Management System")
-        self.geometry("1200x750")
-        self.minsize(1000, 650)
+        self.geometry("1200x800")
+        self.minsize(1000, 700)
 
         ctk.set_appearance_mode("System")
         ctk.set_default_color_theme("blue")
@@ -43,6 +46,7 @@ class LibraryApp(ctk.CTk):
             "Return Book",
             "Records",
             "Calendar",
+            "Settings",
         ]
 
         for label in pages:
@@ -69,6 +73,10 @@ class LibraryApp(ctk.CTk):
         for widget in self.content.winfo_children():
             widget.destroy()
 
+    def _refresh_current_related_views(self) -> None:
+        """Reload the current screen after a database reset if possible."""
+        self.show_page("Dashboard")
+
     def show_page(self, page: str) -> None:
         self._clear_content()
 
@@ -82,10 +90,27 @@ class LibraryApp(ctk.CTk):
             view.grid(row=0, column=0, sticky="nsew")
             return
 
+        if page == "Issue Book":
+            view = IssueView(self.content)
+            view.grid(row=0, column=0, sticky="nsew")
+            return
+
+        if page == "Return Book":
+            view = ReturnView(self.content)
+            view.grid(row=0, column=0, sticky="nsew")
+            return
+
+        if page == "Settings":
+            view = SettingsView(
+                self.content,
+                on_database_changed=self._refresh_current_related_views,
+            )
+            view.grid(row=0, column=0, sticky="nsew")
+            return
+
         frame = ctk.CTkFrame(self.content, fg_color="transparent")
         frame.grid(row=0, column=0, sticky="nsew")
         frame.grid_columnconfigure(0, weight=1)
-        frame.grid_rowconfigure(1, weight=1)
 
         ctk.CTkLabel(
             frame,
