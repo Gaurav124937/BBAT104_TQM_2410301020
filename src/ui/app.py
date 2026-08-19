@@ -2,6 +2,7 @@ import customtkinter as ctk
 
 from database.schema import initialize_database
 from ui.books_view import BooksView
+from ui.members_view import MembersView
 
 
 class LibraryApp(ctk.CTk):
@@ -21,7 +22,6 @@ class LibraryApp(ctk.CTk):
 
         self._build_sidebar()
         self._build_content()
-
         self.show_page("Dashboard")
 
     def _build_sidebar(self) -> None:
@@ -65,8 +65,6 @@ class LibraryApp(ctk.CTk):
         self.content.grid_columnconfigure(0, weight=1)
         self.content.grid_rowconfigure(0, weight=1)
 
-        self.current_view = None
-
     def _clear_content(self) -> None:
         for widget in self.content.winfo_children():
             widget.destroy()
@@ -75,8 +73,13 @@ class LibraryApp(ctk.CTk):
         self._clear_content()
 
         if page == "Books":
-            self.current_view = BooksView(self.content)
-            self.current_view.grid(row=0, column=0, sticky="nsew")
+            view = BooksView(self.content)
+            view.grid(row=0, column=0, sticky="nsew")
+            return
+
+        if page == "Members":
+            view = MembersView(self.content)
+            view.grid(row=0, column=0, sticky="nsew")
             return
 
         frame = ctk.CTkFrame(self.content, fg_color="transparent")
