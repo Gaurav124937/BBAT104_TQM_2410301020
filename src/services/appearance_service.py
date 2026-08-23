@@ -2,17 +2,13 @@ from __future__ import annotations
 
 import customtkinter as ctk
 
+from services.theme_manager import set_application_appearance
+
 
 VALID_MODES = ("System", "Light", "Dark")
 
 
 def set_appearance_mode(mode: str) -> str:
-    """
-    Apply a CustomTkinter appearance mode globally.
-
-    Valid values are System, Light and Dark.
-    Returns the normalized value that was applied.
-    """
     normalized = mode.strip().title()
 
     if normalized not in VALID_MODES:
@@ -20,17 +16,9 @@ def set_appearance_mode(mode: str) -> str:
             f"Invalid appearance mode. Choose one of: {', '.join(VALID_MODES)}."
         )
 
-    ctk.set_appearance_mode(normalized)
-    return normalized
+    return set_application_appearance(normalized)
 
 
 def get_appearance_mode() -> str:
-    """Return the current CustomTkinter appearance mode."""
     current = ctk.get_appearance_mode()
-
-    # CustomTkinter reports the currently resolved mode for System.
-    # The settings screen will default to System until persistence is added.
-    if current not in ("Light", "Dark"):
-        return "System"
-
-    return current
+    return current if current in ("Light", "Dark") else "System"
