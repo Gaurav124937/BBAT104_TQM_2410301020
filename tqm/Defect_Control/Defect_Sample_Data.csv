@@ -1,0 +1,26 @@
+Defect ID,Date,Module,Category,Description,Severity,Status,Corrective Action
+D001,2026-08-01,Books,Validation,Negative quantity could be entered before validation was tightened,2,Closed,Corrected quantity validation and retested
+D002,2026-08-02,Members,Validation,Incomplete member data was accepted in an edge case,3,Closed,Strengthened required-field checks
+D003,2026-08-03,Issue Book,Transaction Accuracy,Duplicate active issue required stronger user feedback,4,Closed,Improved duplicate issue validation
+D004,2026-08-04,Return Book,Transaction Accuracy,Return state required regression verification,4,Closed,Added return workflow verification
+D005,2026-08-05,Records,Search/Retrieval,Record search required broader identifier matching,3,Closed,Added book/member/issue/return ID matching
+D006,2026-08-06,Calendar,Visibility,Issue activity was not visible for a stored date during testing,4,Closed,Improved date query handling
+D007,2026-08-07,Calendar,UI/Theme,Calendar layout required responsive resizing improvements,2,Closed,Adjusted responsive grid and scrolling
+D008,2026-08-08,Settings,UI/Theme,Theme change initially left inconsistent module appearance,3,Closed,Rebuilt application views after theme selection
+D009,2026-08-09,Application,Lifecycle / Stability,UI callback could outlive a destroyed widget,3,Open,Under lifecycle review
+D010,2026-08-10,Dashboard,Visibility,Dashboard values required direct database cross-check,3,Closed,Added dashboard verification check
+D011,2026-08-11,Issue Book,Validation,Due-date boundary behavior required verification,3,Closed,Added date-boundary test cases
+D012,2026-08-12,Books,Validation,Catalog quantity input needed stronger range checks,2,Closed,Added numeric/range validation
+D013,2026-08-13,Records,Visibility,Overdue status required verification against due date,4,Closed,Added overdue classification checks
+D014,2026-08-14,Records,Search/Retrieval,Partial-title search required regression testing,2,Closed,Added partial match test
+D015,2026-08-15,Members,Validation,Member field feedback could be clearer,2,Closed,Improved validation feedback
+D016,2026-08-16,Return Book,Transaction Accuracy,Availability restoration needed verification after return,4,Closed,Added availability consistency check
+D017,2026-08-17,Issue Book,Transaction Accuracy,Unavailable-book path required explicit user feedback,4,Closed,Improved validation message
+D018,2026-08-18,Records,Search/Retrieval,Return ID search required coverage,2,Closed,Added return-ID filter test
+D019,2026-08-19,Calendar,Visibility,Due-date visibility needed regression coverage,3,Closed,Added due-event test
+D020,2026-08-20,Calendar,Visibility,Return-date visibility needed regression coverage,3,Closed,Added return-event test
+D021,2026-08-21,Settings,UI/Theme,Appearance control required cross-module verification,3,Closed,Verified sidebar and content refresh
+D022,2026-08-22,Application,Lifecycle / Stability,Application close could print a background callback message,2,Open,Monitoring clean shutdown behavior
+D023,2026-08-23,Records,Search/Retrieval,Status filter combinations required verification,2,Closed,Added filter regression cases
+D024,2026-08-24,Books,Visibility,Availability count required dashboard consistency check,3,Closed,Cross-checked book availability and dashboard
+D025,2026-08-25,Documentation,Documentation,Setup/user instructions required consolidation,1,In Progress,Preparing README and user manual
