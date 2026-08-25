@@ -7,6 +7,7 @@ from ui.dashboard_view import DashboardView
 from ui.issue_view import IssueView
 from ui.members_view import MembersView
 from ui.return_view import ReturnView
+from ui.records_view import RecordsView
 from ui.settings_view import SettingsView
 
 class LibraryApp(ctk.CTk):
@@ -22,23 +23,18 @@ class LibraryApp(ctk.CTk):
         ctk.CTkLabel(side,text="Q03: Improve Usability",font=ctk.CTkFont(size=11)).pack(side="bottom",pady=18); self.sidebar=side
         self.content=ctk.CTkFrame(self,corner_radius=0); self.content.grid(row=0,column=1,sticky="nsew"); self.content.grid_columnconfigure(0,weight=1); self.content.grid_rowconfigure(0,weight=1)
     def _rebuild(self):
-        # Keep the root window alive, but rebuild sidebar + content so the
-        # newly selected CustomTkinter theme is applied across the whole app.
+        # Keep the root window alive. Only rebuild the current page content.
+        # Destroying the root here leaves CustomTkinter background callbacks
+        # such as update/check_dpi_scaling pointing to dead Tk commands.
         try:
-            self.focus_set()
+            self.content.focus_set()
         except Exception:
             pass
-
-        for widget in self.winfo_children():
-            widget.destroy()
-
-        self._build_shell()
         self.show_page(self.current_page)
-
     def show_page(self,page):
         self.current_page=page
         for w in self.content.winfo_children(): w.destroy()
-        views={"Dashboard":DashboardView,"Books":BooksView,"Members":MembersView,"Issue Book":IssueView,"Return Book":ReturnView,"Calendar":CalendarView}
+        views={"Dashboard":DashboardView,"Books":BooksView,"Members":MembersView,"Issue Book":IssueView,"Return Book":ReturnView,"Records":RecordsView,"Calendar":CalendarView}
         if page in views:
             v=views[page](self.content); v.grid(row=0,column=0,sticky="nsew"); return
         if page=="Settings":
