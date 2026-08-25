@@ -1,0 +1,8 @@
+Category,Frequency,Percentage,CumulativePercentage
+Validation,6,24.0,24.0
+Transaction Accuracy,5,20.0,44.0
+Search/Retrieval,4,16.0,60.0
+Visibility,4,16.0,76.0
+UI/Theme,3,12.0,88.0
+Lifecycle / Stability,2,8.0,96.0
+Documentation,1,4.0,100.0
