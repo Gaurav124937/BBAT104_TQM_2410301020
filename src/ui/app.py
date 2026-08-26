@@ -23,14 +23,14 @@ class LibraryApp(ctk.CTk):
         ctk.CTkLabel(side,text="Q03: Improve Usability",font=ctk.CTkFont(size=11)).pack(side="bottom",pady=18); self.sidebar=side
         self.content=ctk.CTkFrame(self,corner_radius=0); self.content.grid(row=0,column=1,sticky="nsew"); self.content.grid_columnconfigure(0,weight=1); self.content.grid_rowconfigure(0,weight=1)
     def _rebuild(self):
-        # Keep the root window alive. Only rebuild the current page content.
-        # Destroying the root here leaves CustomTkinter background callbacks
-        # such as update/check_dpi_scaling pointing to dead Tk commands.
-        try:
-            self.content.focus_set()
-        except Exception:
-            pass
+        # Keep the main Tk root alive. Rebuild only its child widgets so the
+        # selected theme is applied everywhere without destroying the root.
+        for widget in self.winfo_children():
+            widget.destroy()
+
+        self._build_shell()
         self.show_page(self.current_page)
+
     def show_page(self,page):
         self.current_page=page
         for w in self.content.winfo_children(): w.destroy()

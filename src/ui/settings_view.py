@@ -22,7 +22,11 @@ class SettingsView(ctk.CTkFrame):
         ctk.CTkButton(db,text="Reset Database",width=160,command=self._reset).grid(row=2,column=0,padx=20,pady=(0,20),sticky="w")
     def _schedule_appearance_refresh(self):
         if self.on_appearance_changed:
-            self.after_idle(self.on_appearance_changed)
+            try:
+                self.winfo_toplevel().focus_set()
+            except Exception:
+                pass
+            self.after(500, self.on_appearance_changed)
 
     def _mode(self,v):
         try: set_appearance(v); self._schedule_appearance_refresh()
