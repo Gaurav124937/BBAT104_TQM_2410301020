@@ -1,15 +1,12 @@
+from utils.validation import iso_date, positive_id
 from datetime import date, datetime
 from database.connection import get_connection
 
 
 def issue_book(book_id: int, member_id: int, due_date: str) -> int:
-    if not due_date.strip():
-        raise ValueError("Due date is required.")
-
-    try:
-        datetime.strptime(due_date.strip(), "%Y-%m-%d")
-    except ValueError as exc:
-        raise ValueError("Due date must use YYYY-MM-DD format.") from exc
+    due_date = iso_date(due_date, "Due date")
+    book_id = positive_id(book_id, "Book ID")
+    member_id = positive_id(member_id, "Member ID")
 
     with get_connection() as connection:
         book = connection.execute(
@@ -60,7 +57,7 @@ def issue_book(book_id: int, member_id: int, due_date: str) -> int:
                 book_id,
                 member_id,
                 date.today().isoformat(),
-                due_date.strip(),
+                due_date,
             ),
         )
 

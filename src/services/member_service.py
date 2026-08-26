@@ -1,3 +1,4 @@
+from utils.validation import require_text
 from typing import Optional
 from database.connection import get_connection
 
@@ -8,13 +9,10 @@ def add_member(
     phone: str = "",
     email: str = "",
 ) -> int:
-    name = name.strip()
-    course = course.strip()
+    name = require_text(name, "Name")
+    course = require_text(course, "Course")
     phone = phone.strip()
     email = email.strip()
-
-    if not name or not course:
-        raise ValueError("Name and course are required.")
 
     with get_connection() as connection:
         cursor = connection.execute(
@@ -91,13 +89,10 @@ def update_member(
     phone: str = "",
     email: str = "",
 ) -> None:
-    name = name.strip()
-    course = course.strip()
+    name = require_text(name, "Name")
+    course = require_text(course, "Course")
     phone = phone.strip()
     email = email.strip()
-
-    if not name or not course:
-        raise ValueError("Name and course are required.")
 
     with get_connection() as connection:
         result = connection.execute(

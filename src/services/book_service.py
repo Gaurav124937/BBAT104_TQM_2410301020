@@ -1,3 +1,4 @@
+from utils.validation import non_negative_integer, require_text
 from typing import Optional
 from database.connection import get_connection
 
@@ -9,15 +10,11 @@ def add_book(
     isbn: Optional[str],
     quantity: int,
 ) -> int:
-    title = title.strip()
-    author = author.strip()
-    category = category.strip()
+    title = require_text(title, "Title")
+    author = require_text(author, "Author")
+    category = require_text(category, "Category")
     isbn = isbn.strip() if isbn else None
-
-    if not title or not author or not category:
-        raise ValueError("Title, author and category are required.")
-    if quantity < 0:
-        raise ValueError("Quantity cannot be negative.")
+    quantity = non_negative_integer(quantity, "Quantity")
 
     with get_connection() as connection:
         cursor = connection.execute(
@@ -103,15 +100,11 @@ def update_book(
     isbn: Optional[str],
     quantity: int,
 ) -> None:
-    title = title.strip()
-    author = author.strip()
-    category = category.strip()
+    title = require_text(title, "Title")
+    author = require_text(author, "Author")
+    category = require_text(category, "Category")
     isbn = isbn.strip() if isbn else None
-
-    if not title or not author or not category:
-        raise ValueError("Title, author and category are required.")
-    if quantity < 0:
-        raise ValueError("Quantity cannot be negative.")
+    quantity = non_negative_integer(quantity, "Quantity")
 
     with get_connection() as connection:
         current = connection.execute(
